@@ -6,8 +6,8 @@ import java.util.Scanner;
 
 public class Main{
     public static void main(String[] args){
-        ThePalindrome thePalindrome = new ThePalindrome();
-        int a = thePalindrome.find("abdfhdyrbdbsdfghjkllkjhgfds");
-        System.out.println(a);
+        String str = "abcdef";
+        str.chars();
+        System.out.println(str);
     }
 }
