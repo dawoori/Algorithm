@@ -1,13 +1,16 @@
 package com.dawool;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.io.*;
 
 public class Main{
-    public static void main(String[] args){
-        String str = "abcdef";
-        str.chars();
-        System.out.println(str);
+    public static void main(String[] args) {
+        MazeMaker mazeMaker = new MazeMaker();
+        String[] maze = new String[]{"...","...","..."};
+        int sR = 0;
+        int sC = 1;
+        int[] mR = {1,0,-1,0};
+        int[] mC = {0,1,0,-1};
+//        System.out.println(mR[3]);
+        System.out.println(mazeMaker.longestPath(maze,sR,sC,mR,mC));
     }
 }
