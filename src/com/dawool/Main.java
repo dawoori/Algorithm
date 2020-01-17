@@ -21,7 +21,6 @@ class Main {
             System.out.println(i);
         }
 
-        boolean[] already = new boolean[node];
         int[] dfs = new int[node];
         int[] bfs = new int[node];
         Stack<Integer> stack = new Stack<>();
@@ -30,7 +29,6 @@ class Main {
             stack.push(i);
             if (i==0) dfs[0] = start;
             for(int j=0;j<A[i].size();i++) {
-                if (already[i]==true) continue;
                 i = A[i].get(j);
                 break;
             }
