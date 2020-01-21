@@ -3,34 +3,57 @@ package com.dawool;
 import java.util.*;
 
 class Main {
+    static boolean[] visit;
+    static ArrayList<Integer>[] A;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int node = sc.nextInt(), line = sc.nextInt(), start = sc.nextInt();
 
-        ArrayList<Integer>[] A = new ArrayList[node];
-        for (int i=0;i<node;i++) A[i] = new ArrayList<>();
+        A = new ArrayList[node+1];
+        for (int i=0;i<node+1;i++) A[i] = new ArrayList<>();
 
         for (int i=0;i<line;i++) {
             int a = sc.nextInt(), b = sc.nextInt();
-            A[a-1].add(b-1);
-            A[b-1].add(a-1);
+            A[a].add(b);
+            A[b].add(a);
         }
 
         for (ArrayList i : A) {
             Collections.sort(i);
-            System.out.println(i);
+//            System.out.println(i);
         }
 
-        int[] dfs = new int[node];
-        int[] bfs = new int[node];
-        Stack<Integer> stack = new Stack<>();
-        int i=start;
-        while (true) {
-            stack.push(i);
-            if (i==0) dfs[0] = start;
-            for(int j=0;j<A[i].size();i++) {
-                i = A[i].get(j);
-                break;
+        visit = new boolean[node+1];
+        dfs(start);
+        System.out.printf("\n");
+
+        visit = new boolean[node+1];
+        bfs(start);
+    }
+
+    public static void dfs(int idx) {
+        if(visit[idx]) return;
+        visit[idx] = true;
+        System.out.printf("%d ", idx);
+        for (int i=0;i<A[idx].size();i++){
+            dfs(A[idx].get(i));
+        }
+    }
+
+    public static void bfs(int idx) {
+        LinkedList<Integer> queue = new LinkedList<>();
+        queue.add(idx);
+        int preNode;
+        while(!queue.isEmpty()) {
+            preNode = queue.pop();
+            visit[preNode] = true;
+            System.out.printf("%d ", preNode);
+            for (int i=0;i<A[preNode].size();i++){
+                if (!visit[A[preNode].get(i)]) {
+                    queue.add(A[preNode].get(i));
+                    visit[A[preNode].get(i)] = true;
+                }
             }
         }
     }
