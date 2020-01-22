@@ -1,24 +1,19 @@
 package com.dawool;
 
 import java.util.LinkedList;
-
+//메모화
 public class TestT {
+    static final int h=130, w=130;
+    static int[][] dp = new int[h+1][w+1];
     public static void main(String[] args){
-        boolean[] visit = new boolean[3];
-        System.out.println(visit[1]);
-        visit[1] = true;
-        System.out.println(visit[1]);
-        visit = new boolean[3];
-        System.out.println(visit[1]);
-
-        LinkedList<Integer> que = new LinkedList<>();
-        que.add(2);
-        que.add(4);
-        System.out.println(que);
-        System.out.println(que.pop());
-        System.out.println(que);
-        System.out.println(que.peek());
-        System.out.println(que);
+        System.out.println(dfs(0,0));
     }
 
+    static int dfs(int nowh, int noww) {
+        if (nowh>h || noww>w) return 0;
+        if (nowh==h && noww==w) return 1;
+        if (dp[nowh][noww] != 0) return dp[nowh][noww];
+
+        return dp[nowh][noww] = dfs(nowh+1,noww) + dfs(nowh, noww+1);
+    }
 }
