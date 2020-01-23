@@ -10,8 +10,8 @@ public class MazeMaker {
         int height = maze.length;
         int[][] board = new int[height][width];
 
-        for (int i=0;i<height;i++)
-            for (int j=0;j<width;j++)
+        for (int i = 0; i < height; i++)
+            for (int j = 0; j < width; j++)
                 board[i][j] = -1;
 
         board[startRow][startCol] = 0;
@@ -21,15 +21,15 @@ public class MazeMaker {
         queueX.add(startCol);
         queueY.add(startRow);
 
-        while(!queueX.isEmpty()) {
+        while (!queueX.isEmpty()) {
             int x = queueX.poll();
             int y = queueY.poll();
 
-            for (int i=0;i<moveRow.length;i++) {
+            for (int i = 0; i < moveRow.length; i++) {
                 int nextX = x + moveCol[i];
                 int nextY = y + moveRow[i];
 
-                if (0<=nextX && nextX<width && 0<=nextY && nextY<height && board[nextY][nextX] == -1 && maze[nextY].charAt(nextX) == '.') {
+                if (0 <= nextX && nextX < width && 0 <= nextY && nextY < height && board[nextY][nextX] == -1 && maze[nextY].charAt(nextX) == '.') {
                     board[nextY][nextX] = board[y][x] + 1;
                     queueX.add(nextX);
                     queueY.add(nextY);
@@ -37,9 +37,9 @@ public class MazeMaker {
             }
         }
 
-        for (int i=0;i<height;i++){
-            for (int j=0;j<width;j++){
-                if (maze[i].charAt(j)=='.' && board[i][j] == -1) return -1;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                if (maze[i].charAt(j) == '.' && board[i][j] == -1) return -1;
                 max = Math.max(max, board[i][j]);
             }
         }

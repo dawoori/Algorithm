@@ -6,12 +6,12 @@ import java.util.Arrays;
 public class InterestingParty {
     public static int bestInvitation(String[] first, String[] second) {
         ArrayList<String> every = new ArrayList<>();
-        for (int i=0;i<first.length;i++) {
+        for (int i = 0; i < first.length; i++) {
             if (!every.contains(first[i])) {
                 every.add(first[i]);
             }
         }
-        for (int i=0;i<second.length;i++) {
+        for (int i = 0;i<second.length;i++) {
             if (!every.contains(second[i])) {
                 every.add(second[i]);
             }

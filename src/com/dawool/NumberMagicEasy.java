@@ -11,11 +11,11 @@ public class NumberMagicEasy {
 //
 //        ArrayList<Integer> num = new ArrayList<>();
         int[] nums = new int[4];
-        for (int i=0;i<4;i++) {
+        for (int i = 0; i < 4; i++) {
             if (answer.charAt(i) == 'Y') nums[i] = 1;
             else nums[i] = 0;
         }
-        int number = 16 - nums[0]*8 - nums[1]*4 - nums[2]*2 - nums[3];
+        int number = 16 - nums[0] * 8 - nums[1] * 4 - nums[2] * 2 - nums[3];
         return number;
     }
 }

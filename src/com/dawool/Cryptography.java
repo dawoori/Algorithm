@@ -9,7 +9,7 @@ public class Cryptography {
         numTemp[0]++;
         System.out.println(Arrays.toString(numTemp));
         long answer = 1;
-        for (int num : numTemp){
+        for (int num : numTemp) {
             answer *= num;
         }
         return answer;

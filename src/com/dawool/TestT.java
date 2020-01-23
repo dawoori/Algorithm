@@ -5,8 +5,8 @@ public class TestT {
     static final int h=130, w=130; // 596722340
     static int[][] dp = new int[h+1][w+1];
     public static void main(String[] args){
-        clac();
-        System.out.println(dp[h][w]);
+        System.out.println(dfs(0,0));
+//        clac();
     }
 
     //메모화
