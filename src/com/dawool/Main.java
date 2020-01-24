@@ -1,27 +1,36 @@
 package com.dawool;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int people = sc.nextInt();
+        int height = sc.nextInt();
+        int width = sc.nextInt();
+        String[] board = new String[height];
 
-        int[] kg = new int[people];
-        int[] cm = new int[people];
-        int[] rank = new int[people];
-
-        for (int i = 0; i < people; i++) {
-            kg[i] = sc.nextInt();
-            cm[i] = sc.nextInt();
+        for (int i = 0; i < height; i++) {
+            board[i] = sc.next();
         }
 
-        for (int i = 0; i < people; i++) {
-            rank[i] = 1;
-            for (int j = 0; j < people; j++) {
-                if (kg[j] > kg[i] && cm[j] > cm[i]) rank[i]++;
+        int mini = 64;
+        int preMin, rectangle;
+        for (int k = 0; k < height - 7; k++) {
+            preMin = 64;
+            for (int l = 0; l < width - 7; l++) {
+                rectangle = 0;
+                for (int i = k; i < k + 8; i++) {
+                    for (int j = l; j < l + 8; j++) {
+                        if ((i + j) % 2 == 0 && board[i].charAt(j) == 'B') rectangle++;
+                        if ((i + j) % 2 == 1 && board[i].charAt(j) == 'W') rectangle++;
+                    }
+                }
+
+                preMin = Math.min(rectangle, 64 - rectangle);
+                mini = Math.min(mini, preMin);
             }
-            System.out.printf("%d ", rank[i]);
         }
+        System.out.println(mini);
     }
 }
