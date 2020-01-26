@@ -1,6 +1,8 @@
 package com.dawool;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 class Main {
@@ -10,27 +12,29 @@ class Main {
         int width = sc.nextInt();
         String[] board = new String[height];
 
+        ArrayList<Character> visited = new ArrayList<>();
+        int[][] visitedXY = new int[height][width];
+
         for (int i = 0; i < height; i++) {
             board[i] = sc.next();
         }
+        LinkedList<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{0, 0});
+        int max = 0;
+        int[] prenode;
+        while (!queue.isEmpty()) {
 
-        int mini = 64;
-        int preMin, rectangle;
-        for (int k = 0; k < height - 7; k++) {
-            preMin = 64;
-            for (int l = 0; l < width - 7; l++) {
-                rectangle = 0;
-                for (int i = k; i < k + 8; i++) {
-                    for (int j = l; j < l + 8; j++) {
-                        if ((i + j) % 2 == 0 && board[i].charAt(j) == 'B') rectangle++;
-                        if ((i + j) % 2 == 1 && board[i].charAt(j) == 'W') rectangle++;
-                    }
-                }
+            prenode = queue.pop();
+            visited.add(board[prenode[0]].charAt(prenode[1]));
+            max++;
+            visitedXY[prenode[0]][prenode[1]] = Math.max(max, visitedXY[prenode[0]][prenode[1]]);
 
-                preMin = Math.min(rectangle, 64 - rectangle);
-                mini = Math.min(mini, preMin);
-            }
+            if(prenode[0] > 0 && visited.indexOf(board[prenode[0]-1].charAt(prenode[1])) == -1) queue.add(new int[]{prenode[0] - 1, prenode[1]});
+            if(prenode[0] < height-1 && visited.indexOf(board[prenode[0]+1].charAt(prenode[1])) == -1) queue.add(new int[]{prenode[0] + 1, prenode[1]});
+            if(prenode[1] > 0 && visited.indexOf(board[prenode[0]].charAt(prenode[1]-1)) == -1) queue.add(new int[]{prenode[0], prenode[1] - 1});
+            if(prenode[1] < width-1 && visited.indexOf(board[prenode[0]].charAt(prenode[1]+1)) == -1) queue.add(new int[]{prenode[0], prenode[1] + 1});
+//
         }
-        System.out.println(mini);
+        System.out.println(max);
     }
 }
