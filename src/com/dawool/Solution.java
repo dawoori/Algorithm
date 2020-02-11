@@ -27,7 +27,7 @@ class Result {
 
     public static String findNumber(List<Integer> arr, int k) {
         // Write your code here
-
+        return "answer";
     }
 
 }
