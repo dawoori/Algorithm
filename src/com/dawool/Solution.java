@@ -29,7 +29,6 @@ class Result {
         // Write your code here
         return "answer";
     }
-
 }
 
 public class Solution {

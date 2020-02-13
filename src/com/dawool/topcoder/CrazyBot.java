@@ -1,5 +1,4 @@
-package com.dawool;
-
+package com.dawool.topcoder;
 
 public class CrazyBot {
 

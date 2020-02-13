@@ -1,4 +1,4 @@
-package com.dawool;
+package com.dawool.topcoder;
 
 public class ThePalindrome {
     public int find(String s) {
