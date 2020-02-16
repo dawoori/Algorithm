@@ -24,10 +24,17 @@ public class StepUp {
         
         while (!visited.isEmpty()) {
             preStep = visited.pop();
-            if (preStep + 2 <= stepNumber && maxScore[preStep + 2] < maxScore[preStep] + score[preStep + 2]) {
-                visited.add(preStep + 2);
-                maxScore[preStep + 2] = maxScore[preStep] + score[preStep + 2];
-                howManyOne[preStep + 2] = 1;
+            if (preStep + 2 <= stepNumber) {
+                if (preStep + 3 <= stepNumber) {
+                    visited.add(preStep + 3);
+                    maxScore[preStep + 3] = Math.max(maxScore[preStep] + score[preStep + 2] + score[preStep + 3], maxScore[preStep + 3]);
+                    howManyOne[preStep + 3] = 2;
+                }
+                if (maxScore[preStep + 2] < maxScore[preStep] + score[preStep + 2]) {
+                    visited.add(preStep + 2);
+                    maxScore[preStep + 2] = maxScore[preStep] + score[preStep + 2];
+                    howManyOne[preStep + 2] = 1;
+                }
             }
             if (preStep + 1 <= stepNumber && howManyOne[preStep] < 2 && maxScore[preStep + 1] < maxScore[preStep] + score[preStep + 1]) {
                 visited.add(preStep + 1);
