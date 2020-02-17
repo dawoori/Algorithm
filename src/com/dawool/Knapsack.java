@@ -5,7 +5,7 @@ public class Knapsack {
     int[] value = {2, 3, 2, 3, 6};
     int maxWeight = 10;
     int maxValue = 0;
-    int[][] dp = new int[weight.length][maxWeight + 1];
+    int[][] dp = new int[weight.length + 1][maxWeight + 1];
 
     void dp() {
         for (int i = 0; i < weight.length; i++) {

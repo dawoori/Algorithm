@@ -12,11 +12,13 @@ public class RGBInstance {
     static int n;
     static int[][] cost;
     static int minCost;
+    static int[] tempCost;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         cost = new int[n][3];
+        tempCost = new int[n];
 
         for (int i = 0; i < n; i++) {
             String[] s = br.readLine().split(" ");
@@ -33,24 +35,23 @@ public class RGBInstance {
     static void dfs(int house) {
         if (house == 0) {
             for (int i = 0; i < 3; i++) {
+                rgb[0] = i;
+                tempCost[0] = cost[0][i];
+                dfs(1);
+            }
+        }
+        else {
+            for (int i = 0; i < 3; i++) {
+                if (house > 0 && rgb[house - 1] == i) continue;
                 rgb[house] = i;
-                dfs(house + 1);
+                tempCost[house] = tempCost[house - 1] + cost[house][i];
+                if (house < n - 1) {
+                    dfs(house + 1);
+                    continue;
+                }
+                if (minCost == 0) minCost = tempCost[n - 1];
+                else minCost = Math.min(minCost, tempCost[n - 1]);
             }
         }
-        for (int i = 0; i < 3; i++) {
-            if (house > 0 && rgb[house - 1] == i) continue;
-            rgb[house] = i;
-            if (house < n - 1) {
-                dfs(house + 1);
-                continue;
-            }
-            int tempCost = 0;
-            for (int j = 0; j < n; j++) {
-                tempCost += cost[j][rgb[j]];
-            }
-            if (minCost == 0) minCost = tempCost;
-            else minCost = Math.min(minCost, tempCost);
-        }
-
     }
 }
