@@ -7,11 +7,13 @@ import java.util.List;
 
 class Main {
     public static void main(String[] args) {
-        int a = 1;
-        int b = 2;
-        String s = "";
-        s += String.valueOf(a);
-        s += String.valueOf(b);
-        System.out.println(s);
+        Knapsack knapsack = new Knapsack();
+        knapsack.dp();
+        System.out.println(knapsack.maxValue);
+        int[] arr = {1, 4, 2, 9, 5};
+        System.out.println(Arrays.toString(arr));
+        Arrays.sort(arr);
+        System.out.println(Arrays.toString(arr));
+
     }
 }
