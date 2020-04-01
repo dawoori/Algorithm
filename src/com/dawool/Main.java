@@ -1,19 +1,29 @@
 package com.dawool;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.*;
+import java.util.StringTokenizer;
 
 class Main {
-    public static void main(String[] args) {
-        Knapsack knapsack = new Knapsack();
-        knapsack.dp();
-        System.out.println(knapsack.maxValue);
-        int[] arr = {1, 4, 2, 9, 5};
-        System.out.println(Arrays.toString(arr));
-        Arrays.sort(arr);
-        System.out.println(Arrays.toString(arr));
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int numN = Integer.parseInt(st.nextToken());
+        int numK = Integer.parseInt(st.nextToken());
+        if (numN == numK) {
+            System.out.println(0);
+            return;
+        }
+
+        int[] arr = new int[numN];
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < numN; i++) arr[i] = Integer.parseInt(st.nextToken());
+
+        if (numK == 1) {
+            System.out.println(arr[numN - 1] - arr[0]);
+            return;
+        }
+
+        int[] idx = new int[numK - 1];
 
     }
 }
