@@ -17,15 +17,50 @@ public class Omok {
         // - | \ /
         for (int i = 0; i < numN; i++) {
             st = new StringTokenizer(br.readLine());
-            if(turnOfBlack) {
-                black[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = true;
+            if (turnOfBlack) {
+                black[Integer.parseInt(st.nextToken()) - 1][Integer.parseInt(st.nextToken()) - 1] = true;
+                if (isOmok(black)) {
+                    System.out.println(i + 1);
+                    break;
+                }
                 turnOfBlack = false;
-            }
-            else {
-                white[Integer.parseInt(st.nextToken())][Integer.parseInt(st.nextToken())] = true;
+            } else {
+                white[Integer.parseInt(st.nextToken()) - 1][Integer.parseInt(st.nextToken()) - 1] = true;
+                if (isOmok(white)) {
+                    System.out.println(i + 1);
+                    break;
+                }
                 turnOfBlack = true;
             }
-
         }
+    }
+
+    public static boolean isOmok(boolean[][] pan) {
+        for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+                if (!pan[i][j]) break;
+                boolean okay = true;
+                for (int k = 0; k < 5; k++) {
+                    if (!pan[i + k][j]) {
+                        okay = false;
+                        break;
+                    }
+                }
+                for (int k = 0; k < 5 && !okay; k++) {
+                    if (!pan[i][j + k]) {
+                        okay = false;
+                        break;
+                    }
+                }
+                for (int k = 0; k < 5 && !okay; k++) {
+                    if (!pan[i + k][j + k]) {
+                        okay = false;
+                        break;
+                    }
+                }
+                if (okay) return true;
+            }
+        }
+        return false;
     }
 }
