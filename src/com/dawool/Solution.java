@@ -1,62 +1,61 @@
 package com.dawool;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
-import static java.util.stream.Collectors.joining;
-import static java.util.stream.Collectors.toList;
+class Solution {
+    public String solution(int[] numbers, String hand) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        int left = -1;
+        int right = -1;
 
-
-
-class Result {
-
-    /*
-     * Complete the 'findNumber' function below.
-     *
-     * The function is expected to return a STRING.
-     * The function accepts following parameters:
-     *  1. INTEGER_ARRAY arr
-     *  2. INTEGER k
-     */
-
-    public static String findNumber(List<Integer> arr, int k) {
-        // Write your code here
-        return "answer";
-    }
-}
-
-public class Solution {
-    public static void main(String[] args) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
-        int arrCount = Integer.parseInt(bufferedReader.readLine().trim());
-
-        List<Integer> arr = IntStream.range(0, arrCount).mapToObj(i -> {
-            try {
-                return bufferedReader.readLine().replaceAll("\\s+$", "");
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+        for (int i = 0; i < numbers.length; i++) {
+            if (numbers[i] == 1 || numbers[i] == 4 || numbers[i] == 7) {
+                left = numbers[i];
+                stringBuilder.append("L");
+            } else if (numbers[i] == 3 || numbers[i] == 6 || numbers[i] == 9) {
+                right = numbers[i];
+                stringBuilder.append("R");
+            } else {
+                if (distance(left, numbers[i]) == distance(right, numbers[i])) {
+                    if (hand.equals("left")) {
+                        left = numbers[i];
+                        stringBuilder.append("L");
+                    } else {
+                        right = numbers[i];
+                        stringBuilder.append("R");
+                    }
+                } else if (distance(left, numbers[i]) < distance(right, numbers[i])) {
+                    left = numbers[i];
+                    stringBuilder.append("L");
+                } else {
+                    right = numbers[i];
+                    stringBuilder.append("R");
+                }
             }
-        })
-                .map(String::trim)
-                .map(Integer::parseInt)
-                .collect(toList());
+        }
+        return stringBuilder.toString();
+    }
 
-        int k = Integer.parseInt(bufferedReader.readLine().trim());
-
-        String result = Result.findNumber(arr, k);
-
-        bufferedWriter.write(result);
-        bufferedWriter.newLine();
-
-        bufferedReader.close();
-        bufferedWriter.close();
+    public int distance(int hand, int pad) {
+        if (pad == 2) {
+            if (hand == 2) return 0;
+            else if (hand == 1 || hand == 3 || hand == 5) return 1;
+            else if (hand == 4 || hand == 6 || hand == 8) return 2;
+            else if (hand == 7 || hand == 9 || hand == 0) return 3;
+            else return 4;
+        } else if (pad == 5) {
+            if (hand == 5) return 0;
+            else if (hand == 4 || hand == 6 || hand == 2 || hand == 8) return 1;
+            else if (hand == 1 || hand == 3 || hand == 0 || hand == 7 || hand == 9) return 2;
+            else return 3;
+        } else if (pad == 8) {
+            if (hand == 8) return 0;
+            else if (hand == 1 || hand == 3) return 3;
+            else if (hand == 4 || hand == 6 || hand == 2 || hand == -1) return 2;
+            else return 1;
+        } else {
+            if (hand == 1 || hand == 3) return 4;
+            else if (hand == 4 || hand == 6 || hand == 2) return 3;
+            else if (hand == 7 || hand == 9 || hand == 5) return 2;
+            else return 1;
+        }
     }
 }
