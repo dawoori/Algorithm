@@ -1,6 +1,6 @@
 package com.dawool;
 
-class Solution {
+class kko1 {
     public String solution(int[] numbers, String hand) {
         StringBuilder stringBuilder = new StringBuilder("");
         int left = -1;
