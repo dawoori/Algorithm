@@ -1,45 +1,24 @@
 package com.dawool;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Queue;
-import java.util.Stack;
 
 class Solution {
-    public int solution(int cacheSize, String[] cities) {
-        if (cacheSize == 0) return cities.length * 5;
-        int answer = 0;
+    public int[] solution(int n) {
+        return paper(n);
+    }
 
-        ArrayList<String> caches = new ArrayList<>();
+    public int[] paper(int n) {
+        if (n == 1) return new int[]{0};
 
-        int fullCacheIndex = 0;
+        int[] left = paper(n - 1);
+        int[] right = Arrays.copyOf(left, left.length);
 
-        for (int i = 0; i < cities.length; i++) {
-            if (caches.contains(cities[i].toLowerCase())) {
-                answer += 1;
-                caches.remove(cities[i].toLowerCase());
-                caches.add(cities[i].toLowerCase());
-            } else {
-                answer += 5;
-                caches.add(cities[i].toLowerCase());
-            }
-            if (caches.size() == cacheSize) {
-                fullCacheIndex = i;
-                break;
-            }
-        }
+        right[(right.length + 1) / 2 - 1] = 1;
 
-        for (int i = fullCacheIndex + 1; i < cities.length; i++) {
-            if (caches.contains(cities[i].toLowerCase())) {
-                answer += 1;
-                caches.remove(cities[i].toLowerCase());
-                caches.add(cities[i].toLowerCase());
-            } else {
-                answer += 5;
-                caches.remove(0);
-                caches.add(cities[i].toLowerCase());
-            }
-        }
+        int[] answer = new int[1 + left.length * 2];
+
+        System.arraycopy(left, 0, answer, 0, left.length);
+        System.arraycopy(right, 0, answer, left.length + 1, left.length);
 
         return answer;
     }

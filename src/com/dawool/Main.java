@@ -5,6 +5,12 @@ import java.util.*;
 class Main {
 
     public static void main(String[] args) throws Exception {
-        System.out.println("AbcDe".toLowerCase());
+
+        Solution solution = new Solution();
+
+        int[] ans = solution.solution(3);
+
+        System.out.println(Arrays.toString(ans));
+
     }
 }
