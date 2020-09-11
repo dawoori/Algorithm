@@ -3,22 +3,16 @@ package com.dawool;
 import java.util.Arrays;
 
 class Solution {
-    public int[] solution(int n) {
-        return paper(n);
-    }
+    public int solution(int[][] a) {
+        int answer = -1;
+        int[] oneOfCol = new int[a[0].length];
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[0].length; j++) {
+                if(a[i][j] == 1) oneOfCol[j]++;
+            }
+        }
 
-    public int[] paper(int n) {
-        if (n == 1) return new int[]{0};
-
-        int[] left = paper(n - 1);
-        int[] right = Arrays.copyOf(left, left.length);
-
-        right[(right.length + 1) / 2 - 1] = 1;
-
-        int[] answer = new int[1 + left.length * 2];
-
-        System.arraycopy(left, 0, answer, 0, left.length);
-        System.arraycopy(right, 0, answer, left.length + 1, left.length);
+        System.out.println(Arrays.toString(oneOfCol));
 
         return answer;
     }
