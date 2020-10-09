@@ -1,38 +1,13 @@
 package com.dawool;
 
-import java.util.ArrayDeque;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Deque;
-import java.util.Stack;
+import java.util.Date;
 
 class Main {
-    public static void main(String[] args) {
-
-        int n = 45;
-        int m = 3;
-
-        Deque<Integer> stack = new ArrayDeque<>();
-
-        while(true) {
-            stack.push(n % m);
-            n = n / m;
-            if (n == 0) {
-                break;
-            }
-        }
-
-
-        int number = 0;
-        int digit = 0;
-
-        while(!stack.isEmpty()) {
-            int k = stack.removeFirst() * (int) Math.pow(10, digit);
-            number += k;
-            System.out.println(k);
-            digit++;
-        }
-
-        System.out.println(number);
-        System.out.println(Math.pow(10, 2));
+    public static void main(String[] args) throws ParseException {
+        Solution solution = new Solution();
+        solution.solution(3, new String[]{"10/01 23:20:25 30", "10/01 23:25:50 26", "10/01 23:31:00 05", "10/01 23:33:17 24", "10/01 23:50:25 13", "10/01 23:55:45 20", "10/01 23:59:39 03", "10/02 00:10:00 10"});
     }
 }

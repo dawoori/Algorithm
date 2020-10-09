@@ -1,34 +1,21 @@
 package com.dawool;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-
 class Solution {
-    public int solution(int n) {
-        int answer = 0;
+    public int solution(String depar, String hub, String dest, String[][] roads) {
+        int answer = navigation(depar, hub, roads) * navigation(hub, dest, roads);
+        return answer;
+    }
 
-        int ternary = 3;
+    public int navigation(String now, String dest, String[][] roads) {
+        if (now.equals(dest)) return 1;
 
-        Deque<Integer> stack = new ArrayDeque<>();
-
-        while(true) {
-            stack.push(n % ternary);
-            n = n / ternary;
-            if (n == 0) {
-                break;
+        int count = 0;
+        for (int i = 0; i < roads.length; i++) {
+            if(roads[i][0].equals(now)) {
+                count += navigation(roads[i][1], dest, roads);
             }
         }
 
-        int number = 0;
-        int digit = 0;
-
-        while(!stack.isEmpty()) {
-            int k = stack.removeFirst() * (int) Math.pow(10, digit);
-            number += k;
-            System.out.println(k);
-            digit++;
-        }
-
-        return answer;
+        return count;
     }
 }
