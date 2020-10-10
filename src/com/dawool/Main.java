@@ -2,12 +2,23 @@ package com.dawool;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
 class Main {
     public static void main(String[] args) throws ParseException {
         Solution solution = new Solution();
-        solution.solution(3, new String[]{"10/01 23:20:25 30", "10/01 23:25:50 26", "10/01 23:31:00 05", "10/01 23:33:17 24", "10/01 23:50:25 13", "10/01 23:55:45 20", "10/01 23:59:39 03", "10/02 00:10:00 10"});
+
+        Set<Integer> lamp = new HashSet<>();
+        lamp.add(1);
+        lamp.add(2);
+        lamp.add(3);
+        lamp.add(4);
+
+        System.out.println(lamp);
+        System.out.println(lamp.contains(1));
+
+        lamp.remove(1);
+        System.out.println(lamp);
+        System.out.println(lamp.contains(1));
     }
 }

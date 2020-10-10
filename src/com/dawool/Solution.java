@@ -1,21 +1,37 @@
 package com.dawool;
 
+import java.util.*;
+
 class Solution {
-    public int solution(String depar, String hub, String dest, String[][] roads) {
-        int answer = navigation(depar, hub, roads) * navigation(hub, dest, roads);
-        return answer;
-    }
+    public int solution(int n, int[][] groups) {
+        int answer = 0;
 
-    public int navigation(String now, String dest, String[][] roads) {
-        if (now.equals(dest)) return 1;
-
-        int count = 0;
-        for (int i = 0; i < roads.length; i++) {
-            if(roads[i][0].equals(now)) {
-                count += navigation(roads[i][1], dest, roads);
+        Map<Integer, Integer> lamp = new HashMap<>();
+        for (int i = 0; i < groups.length; i++) {
+            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
+                int value = 1;
+                if (lamp.containsKey(j)) value += lamp.get(j);
+                lamp.put(j, value);
             }
         }
 
-        return count;
+        List<Integer> list = new ArrayList<>(lamp.values());
+        int minTimes = Collections.min(list);
+
+        for (int i = 0; i < groups.length; i++) {
+            boolean inner = true;
+            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
+                if (lamp.containsKey(j) && lamp.get(j) == 1) {
+                    inner = false;
+                    break;
+                }
+            }
+
+            if (!inner) answer++;
+        }
+
+        answer += (n - lamp.size());
+
+        return answer;
     }
 }
