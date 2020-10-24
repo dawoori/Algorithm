@@ -1,11 +1,23 @@
 package com.dawool;
 
 import java.util.LinkedList;
+import java.util.Stack;
+
 public class TestT {
     static final int h=130, w=130; // 596722340
     static int[][] dp = new int[h+1][w+1];
     public static void main(String[] args){
-        System.out.println((char) 65);
+        StringBuilder sb = new StringBuilder();
+        sb.append("abcd");
+        sb.insert(0,"1234");
+        Stack<String> stack = new Stack<>();
+        stack.push("abcd");
+        stack.push("1234");
+        System.out.println(stack);
+        System.out.println(stack.pop());
+        System.out.println(stack.peek());
+        String str = "a";
+        System.out.println(str.charAt(str.length() - 1));
     }
 
     //메모화

@@ -1,63 +1,95 @@
 package com.dawool;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 class Main {
-    private static void solution(int day, int width, int[][] blocks) {
+    private static void solution(int numOfOrder, String[] orderArr) {
         // TODO: 이곳에 코드를 작성하세요. 추가로 필요한 함수와 전역변수를 선언해서 사용하셔도 됩니다.
-        int[] blockState = new int[width];
-        int answer = 0;
+        Stack<String> orderStack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
 
-        for (int d = 0; d < day; d++) {
-            for (int b = 0; b < width; b++) {
-                blockState[b] += blocks[d][b];
-            }
-
+        for (int order = 0; order < numOfOrder; order++) {
             int left = 0;
-            int right = 0;
-            for (int i = 1; i < width; i++) {
-                if (blockState[i] < blockState[i - 1]) {
-                    break;
-                }
-                left = i;
-                right = i;
-            }
+            int right;
+            for (int c = 0; c < orderArr[order].length(); c++) {
+                if (orderArr[order].charAt(c) == '(') {
+                    right = c - 1;
+                    StringBuilder strBuilder = new StringBuilder(orderArr[order].substring(left, right + 1));
+                    String str = orderArr[order].substring(left, right + 1);
 
-            for (int block = 1; block < width; block++) {
-                if (blockState[block] > blockState[block - 1]) {
-                    right = block;
-                    for (int j = left + 1; j < right; j++) {
-                        answer += Math.min(blockState[left], blockState[right]) - blockState[j];
-                        blockState[j] += Math.min(blockState[left], blockState[right]) - blockState[j];
+                    for (int i = 0; i < str.length() - 1; i++) {
+                        if (str.charAt(i) >= 49 && str.charAt(i) <= 57) {
+                            for (int j = 0; j < str.charAt(i) - 48; j++) {
+                                strBuilder.append(str.charAt(i));
+                            }
+                        } else {
+                            strBuilder.append(str.charAt(i));
+                        }
                     }
-                } else {
-                    left = right;
+
+                    if (!str.equals("")) {
+                        orderStack.push(strBuilder.toString());
+                    }
+//                    System.out.println(str);
+                    left = c + 1;
+
+                } else if (orderArr[order].charAt(c) == ')') {
+                    right = c - 1;
+                    String str = orderArr[order].substring(left, right + 1);
+                    left = c + 1;
+
+//                    System.out.println(str);
+                    String popedString = orderStack.pop();
+                    if (!str.equals("") && str.charAt(str.length() - 1) >= 49 && str.charAt(str.length() - 1) <= 57) {
+                        for (int i = 0; i < str.charAt(str.length() - 1) - 48; i++) {
+                            String tempStr = orderStack.pop();
+                            sb.append(tempStr);
+                        }
+
+                    } else if (!str.equals("") && str.charAt(str.length() - 1) == 'R') {
+                        String tempStr = orderStack.pop();
+                        for (int i = 0; i < tempStr.length(); i++) {
+                            sb.append('R');
+                            sb.append(tempStr.charAt(i));
+                        }
+                    } else if (!str.equals("") && str.charAt(str.length() - 1) == 'G') {
+                        String tempStr = orderStack.pop();
+                        for (int i = 0; i < tempStr.length(); i++) {
+                            sb.append('G');
+                            sb.append(tempStr.charAt(i));
+                        }
+                    } else if (!str.equals("") && str.charAt(str.length() - 1) == 'B') {
+                        String tempStr = orderStack.pop();
+                        for (int i = 0; i < tempStr.length(); i++) {
+                            sb.append('B');
+                            sb.append(tempStr.charAt(i));
+                        }
+                    } else {
+
+                    }
                 }
             }
-        }
+            sb.append('\n');
 
-        System.out.println(answer);
+        }
+        System.out.println(sb);
     }
 
     private static class InputData {
-        int day;
-        int width;
-        int[][] blocks;
+        int numOfOrder;
+        String[] orderArr;
     }
 
     private static InputData processStdin() {
         InputData inputData = new InputData();
 
         try (Scanner scanner = new Scanner(System.in)) {
-            inputData.day = Integer.parseInt(scanner.nextLine().replaceAll("\\s+", ""));
-            inputData.width = Integer.parseInt(scanner.nextLine().replaceAll("\\s+", ""));
+            inputData.numOfOrder = Integer.parseInt(scanner.nextLine().replaceAll("\\s+", ""));
 
-            inputData.blocks = new int[inputData.day][inputData.width];
-            for (int i = 0; i < inputData.day; i++) {
-                String[] buf = scanner.nextLine().trim().replaceAll("\\s+", " ").split(" ");
-                for (int j = 0; j < inputData.width; j++) {
-                    inputData.blocks[i][j] = Integer.parseInt(buf[j]);
-                }
+            inputData.orderArr = new String[inputData.numOfOrder];
+            for (int i = 0; i < inputData.numOfOrder; i++) {
+                inputData.orderArr[i] = scanner.nextLine().replaceAll("\\s+", "");
             }
         } catch (Exception e) {
             throw e;
@@ -69,6 +101,6 @@ class Main {
     public static void main(String[] args) throws Exception {
         InputData inputData = processStdin();
 
-        solution(inputData.day, inputData.width, inputData.blocks);
+        solution(inputData.numOfOrder, inputData.orderArr);
     }
 }
