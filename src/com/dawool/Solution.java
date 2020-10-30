@@ -1,36 +1,26 @@
 package com.dawool;
 
-import java.util.*;
-
 class Solution {
-    public int solution(int n, int[][] groups) {
-        int answer = 0;
+    public String solution(String number, int k) {
+        String answer = "";
+        int remove = k;
 
-        Map<Integer, Integer> lamp = new HashMap<>();
-        for (int i = 0; i < groups.length; i++) {
-            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
-                int value = 1;
-                if (lamp.containsKey(j)) value += lamp.get(j);
-                lamp.put(j, value);
-            }
-        }
-
-        List<Integer> list = new ArrayList<>(lamp.values());
-        int minTimes = Collections.min(list);
-
-        for (int i = 0; i < groups.length; i++) {
-            boolean inner = true;
-            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
-                if (lamp.containsKey(j) && lamp.get(j) == 1) {
-                    inner = false;
-                    break;
+        int startIndex = -1;
+        while (remove > 0) {
+            int largestNumber = 0;
+            int topIndex = -1;
+            for (int num = startIndex + 1; num <= startIndex + remove + 1; num++) {
+                if (number.charAt(num) > largestNumber) {
+                    largestNumber = number.charAt(num);
+                    topIndex = num;
                 }
             }
-
-            if (!inner) answer++;
+            remove -= topIndex - startIndex - 1;
+            startIndex = topIndex;
+            answer += (char) largestNumber;
+            if (answer.length() >= number.length() - k) return answer;
         }
-
-        answer += (n - lamp.size());
+        answer += number.substring(Math.min(startIndex + 1, number.length()));
 
         return answer;
     }

@@ -7,18 +7,15 @@ import java.util.*;
 class Main {
     public static void main(String[] args) throws ParseException {
         Solution solution = new Solution();
+        String good = solution.solution("4177252841", 8);
+        System.out.println(good);
 
-        Set<Integer> lamp = new HashSet<>();
-        lamp.add(1);
-        lamp.add(2);
-        lamp.add(3);
-        lamp.add(4);
+        int k = 5;
+        System.out.println(k);
+        System.out.println(k--);
+        System.out.println(k);
+        System.out.println(--k);
+        System.out.println(k);
 
-        System.out.println(lamp);
-        System.out.println(lamp.contains(1));
-
-        lamp.remove(1);
-        System.out.println(lamp);
-        System.out.println(lamp.contains(1));
     }
 }
