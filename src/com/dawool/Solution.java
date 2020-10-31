@@ -1,36 +1,29 @@
 package com.dawool;
 
-import java.util.*;
-
 class Solution {
-    public int solution(int n, int[][] groups) {
-        int answer = 0;
+    public String solution(int n, int[][] delivery) {
+        char[] answerChar = new char[n];
 
-        Map<Integer, Integer> lamp = new HashMap<>();
-        for (int i = 0; i < groups.length; i++) {
-            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
-                int value = 1;
-                if (lamp.containsKey(j)) value += lamp.get(j);
-                lamp.put(j, value);
+        for (int i = 0; i < n; i++) {
+            answerChar[i] = '?';
+        }
+        for (int i = 0; i < delivery.length; i++) {
+            if (delivery[i][2] == 1) {
+                answerChar[delivery[i][0] - 1] = 'O';
+                answerChar[delivery[i][1] - 1] = 'O';
             }
         }
-
-        List<Integer> list = new ArrayList<>(lamp.values());
-        int minTimes = Collections.min(list);
-
-        for (int i = 0; i < groups.length; i++) {
-            boolean inner = true;
-            for (int j = groups[i][0]; j < groups[i][1] + 1; j++) {
-                if (lamp.containsKey(j) && lamp.get(j) == 1) {
-                    inner = false;
-                    break;
+        for (int i = 0; i < delivery.length; i++) {
+            if (delivery[i][2] == 0) {
+                if (answerChar[delivery[i][0] - 1] == 'O' && answerChar[delivery[i][1] - 1] == '?') {
+                    answerChar[delivery[i][1] - 1] = 'X';
+                } else if (answerChar[delivery[i][0] - 1] == '?' && answerChar[delivery[i][1] - 1] == 'O') {
+                    answerChar[delivery[i][0] - 1] = 'X';
                 }
             }
-
-            if (!inner) answer++;
         }
 
-        answer += (n - lamp.size());
+        String answer = new String(answerChar);
 
         return answer;
     }
