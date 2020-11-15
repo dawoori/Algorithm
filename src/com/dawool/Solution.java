@@ -1,27 +1,49 @@
 package com.dawool;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 class Solution {
-    public int solution(int[] openA, int[] closeB) {
+    List<int[]> possible = new ArrayList<>();
+
+    public int solution(int[][] board) {
         int answer = 0;
-        int closeMemory = 0;
-        boolean[] time = new boolean[closeB[closeB.length - 1]];
 
-        for (int open = 0; open < openA.length; open++) {
-            for (int close = closeMemory; close < closeB.length; close++) {
-                if (openA[open] < closeB[close]) {
-                    for (int i = openA[open]; i < closeB[close]; i++) {
-                        time[i] = true;
-                    }
-                    closeMemory = close;
-                    break;
-                }
-            }
-
+        int n = board.length;
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) {
+            arr[i] = i;
         }
+        int[] output = new int[n];
+        boolean[] visited = new boolean[n];
 
-        for (int i = 0; i < time.length; i++) {
-            if (time[i]) answer++;
+        permute(arr, output, visited, 0);
+
+        for (int i = 0; i < possible.size(); i++) {
+            int[] batch = possible.get(i);
+            int tempAnswer = 0;
+            for (int row = 0; row < n; row++) {
+                tempAnswer += board[row][batch[row]];
+            }
+            answer = Math.max(answer, tempAnswer);
         }
         return answer;
+    }
+
+    void permute(int[] arr, int[] output, boolean[] visited, int depth) {
+        if (depth == arr.length) {
+            possible.add(Arrays.copyOf(output, output.length));
+            return;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if (!visited[i]) {
+                visited[i] = true;
+                output[depth] = arr[i];
+                permute(arr, output, visited, depth + 1);
+                visited[i] = false;
+            }
+        }
     }
 }
