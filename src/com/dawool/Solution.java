@@ -1,27 +1,27 @@
 package com.dawool;
 
 class Solution {
-    public String solution(String number, int k) {
-        String answer = "";
-        int remove = k;
+    public int solution(int[] openA, int[] closeB) {
+        int answer = 0;
+        int closeMemory = 0;
+        boolean[] time = new boolean[closeB[closeB.length - 1]];
 
-        int startIndex = -1;
-        while (remove > 0) {
-            int largestNumber = 0;
-            int topIndex = -1;
-            for (int num = startIndex + 1; num <= startIndex + remove + 1; num++) {
-                if (number.charAt(num) > largestNumber) {
-                    largestNumber = number.charAt(num);
-                    topIndex = num;
+        for (int open = 0; open < openA.length; open++) {
+            for (int close = closeMemory; close < closeB.length; close++) {
+                if (openA[open] < closeB[close]) {
+                    for (int i = openA[open]; i < closeB[close]; i++) {
+                        time[i] = true;
+                    }
+                    closeMemory = close;
+                    break;
                 }
             }
-            remove -= topIndex - startIndex - 1;
-            startIndex = topIndex;
-            answer += (char) largestNumber;
-            if (answer.length() >= number.length() - k) return answer;
-        }
-        answer += number.substring(Math.min(startIndex + 1, number.length()));
 
+        }
+
+        for (int i = 0; i < time.length; i++) {
+            if (time[i]) answer++;
+        }
         return answer;
     }
 }
