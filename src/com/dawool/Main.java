@@ -7,10 +7,8 @@ import java.util.Stack;
 class Main {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        char[] anserChar = new char[3];
-
-        System.out.println(Arrays.toString(anserChar));
-        System.out.println(new String(anserChar));
-        System.out.println(anserChar[0]);
+        int[][] arr = new int[][] {{0,0,1,1},{1,1,1,1},{2,2,2,1},{0,0,0,2}}	;
+        int[] arrA = solution.solution(arr);
+        System.out.println(Arrays.toString(arrA));
     }
 }
