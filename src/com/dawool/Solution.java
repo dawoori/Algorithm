@@ -1,31 +1,27 @@
 package com.dawool;
 
 class Solution {
-    boolean[][] searched;
+    public String solution(String number, int k) {
+        String answer = "";
+        int remove = k;
 
-    public int[] solution(int[][] v) {
-        searched = new boolean[v.length][v[0].length];
-        int[] answer = new int[3];
-
-        for (int i = 0; i < v.length; i++) {
-            for (int j = 0; j < v[0].length; j++) {
-                int a = search(i, j, v, v[i][j]);
-                if (a > 0) {
-                    answer[v[i][j]]++;
+        int startIndex = -1;
+        while (remove > 0) {
+            int largestNumber = 0;
+            int topIndex = -1;
+            for (int num = startIndex + 1; num <= startIndex + remove + 1; num++) {
+                if (number.charAt(num) > largestNumber) {
+                    largestNumber = number.charAt(num);
+                    topIndex = num;
                 }
             }
+            remove -= topIndex - startIndex - 1;
+            startIndex = topIndex;
+            answer += (char) largestNumber;
+            if (answer.length() >= number.length() - k) return answer;
         }
-        return answer;
-    }
+        answer += number.substring(Math.min(startIndex + 1, number.length()));
 
-    public int search(int i, int j, int[][] v, int vegie) {
-        if (i < 0 || j < 0 || i >= v.length || j >= v.length || searched[i][j] || v[i][j] != vegie) {
-            return 0;
-        }
-        searched[i][j] = true;
-        return 1 + search(i + 1, j, v, vegie)
-                + search(i, j + 1, v, vegie)
-                + search(i - 1, j, v, vegie)
-                + search(i, j - 1, v, vegie);
+        return answer;
     }
 }

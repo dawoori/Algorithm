@@ -1,14 +1,21 @@
 package com.dawool;
 
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.Stack;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
         Solution solution = new Solution();
-        int[][] arr = new int[][] {{0,0,1,1},{1,1,1,1},{2,2,2,1},{0,0,0,2}}	;
-        int[] arrA = solution.solution(arr);
-        System.out.println(Arrays.toString(arrA));
+        String good = solution.solution("4177252841", 8);
+        System.out.println(good);
+
+        int k = 5;
+        System.out.println(k);
+        System.out.println(k--);
+        System.out.println(k);
+        System.out.println(--k);
+        System.out.println(k);
+
     }
 }
