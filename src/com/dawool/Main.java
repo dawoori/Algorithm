@@ -7,13 +7,15 @@ import java.util.*;
 class Main {
     public static void main(String[] args) throws ParseException {
         Solution solution = new Solution();
-        int[][] a = new int[][]{{3, 6, 8},{1, 4, 7},{2, 1, 4}};
-        int[] b = new int[]{4, 10, 12};
-        solution.solution(a);
-
-        List<int[]> list = new ArrayList<>(0);
-        list.add(new int[]{1, 2, 3});
-        list.add(new int[]{1, 3, 2});
+        Random random = new Random();
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < 1000; i++) {
+            list.add(random.nextInt(10000));
+//            list.add(i);
+        }
+        int[] b = list.stream().mapToInt(Integer::intValue).toArray();
+        int[] ans = solution.solution(b, 1);
+        System.out.println(Arrays.toString(ans));
 
     }
 

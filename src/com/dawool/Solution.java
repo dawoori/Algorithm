@@ -1,48 +1,58 @@
 package com.dawool;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class Solution {
-    List<int[]> possible = new ArrayList<>();
+    ArrayList<ArrayList<Integer>> route = new ArrayList<>();
+    int maxCookies = 0;
+    int[] dp;
+    public int[] solution(int[] cookies, int k) {
+        dp = new int[cookies.length];
 
-    public int solution(int[][] board) {
-        int answer = 0;
-
-        int n = board.length;
-        int[] arr = new int[n];
-        for (int i = 0; i < n; i++) {
-            arr[i] = i;
-        }
-        int[] output = new int[n];
-        boolean[] visited = new boolean[n];
-
-        permute(arr, output, visited, 0);
-
-        for (int i = 0; i < possible.size(); i++) {
-            int[] batch = possible.get(i);
-            int tempAnswer = 0;
-            for (int row = 0; row < n; row++) {
-                tempAnswer += board[row][batch[row]];
+        for (int cs = 1; cs < cookies.length; cs++) {
+            dp[cs] = 1;
+            for (int dps = cs - 1; dps >= 0; dps--) {
+                if (cookies[cs] > cookies[dps]) {
+                    dp[cs] = Math.max(dp[cs], dp[dps] + 1);
+                }
             }
-            answer = Math.max(answer, tempAnswer);
         }
+
+        for (int i = 0; i < cookies.length; i++) {
+            maxCookies = Math.max(maxCookies, dp[i]);
+        }
+
+        for (int i = 0; i < cookies.length; i++) {
+            if (dp[i] == maxCookies) {
+                ArrayList<Integer> tempRoute = new ArrayList<>();
+                dfs2(cookies, i, tempRoute, 1);
+            }
+        }
+
+        Collections.sort(route, (integers, t1) -> {
+            for (int i = 0; i < integers.size(); i++) {
+                if (integers.get(i).compareTo(t1.get(i)) != 0) {
+                    return integers.get(i).compareTo(t1.get(i));
+                }
+            }
+            return 0;
+        });
+
+        int[] answer = route.get(k - 1).stream().mapToInt(Integer::intValue).toArray();
         return answer;
     }
 
-    void permute(int[] arr, int[] output, boolean[] visited, int depth) {
-        if (depth == arr.length) {
-            possible.add(Arrays.copyOf(output, output.length));
+    void dfs2(int[] cookies, int idx, List<Integer> recentRoute, int depth) {
+        List<Integer> newRoute = new ArrayList<>(recentRoute);
+        newRoute.add(cookies[idx]);
+        if (depth == maxCookies) {
+            Collections.reverse(newRoute);
+            route.add((ArrayList<Integer>) newRoute);
             return;
         }
-
-        for (int i = 0; i < arr.length; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                output[depth] = arr[i];
-                permute(arr, output, visited, depth + 1);
-                visited[i] = false;
+        for (int i = idx - 1; i >= 0; i--) {
+            if (cookies[i] < cookies[idx] && dp[i] + depth == maxCookies) {
+                dfs2(cookies, i, newRoute, depth + 1);
             }
         }
     }
