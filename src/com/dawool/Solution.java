@@ -3,57 +3,26 @@ package com.dawool;
 import java.util.*;
 
 class Solution {
-    ArrayList<ArrayList<Integer>> route = new ArrayList<>();
-    int maxCookies = 0;
-    int[] dp;
-    public int[] solution(int[] cookies, int k) {
-        dp = new int[cookies.length];
+    public long howMany(int size, int[] start, int[] end, int numMoves) {
+        int height = Math.abs(end[0] - start[0]) + 1;
+        int width = Math.abs(end[1] - start[1]) + 1;
+        long[][] dp = new long[height][width];
+        int[][] number = new int[height][width];
 
-        for (int cs = 1; cs < cookies.length; cs++) {
-            dp[cs] = 1;
-            for (int dps = cs - 1; dps >= 0; dps--) {
-                if (cookies[cs] > cookies[dps]) {
-                    dp[cs] = Math.max(dp[cs], dp[dps] + 1);
+        dp[0][0] = 1;
+        for (int i = 0; i < numMoves; i++) {
+            for (int j = 0; j < height; j++) {
+                for (int k = 0; k < width; k++) {
+                    if (number[j][k] == i)
+                        if (j > 0) dp[j][k] += dp[j - 1][k];
+                    if (k > 0) dp[j][k] += dp[j][k - 1];
+                    if (j > 0 && k > 0) dp[j][k] += dp[j - 1][k - 1];
+                    if (j > 1 && k > 0) dp[j][k] += dp[j - 2][k - 1];
+                    if (j > 0 && k > 1) dp[j][k] += dp[j - 1][k - 2];
                 }
             }
         }
 
-        for (int i = 0; i < cookies.length; i++) {
-            maxCookies = Math.max(maxCookies, dp[i]);
-        }
-
-        for (int i = 0; i < cookies.length; i++) {
-            if (dp[i] == maxCookies) {
-                ArrayList<Integer> tempRoute = new ArrayList<>();
-                dfs2(cookies, i, tempRoute, 1);
-            }
-        }
-
-        Collections.sort(route, (integers, t1) -> {
-            for (int i = 0; i < integers.size(); i++) {
-                if (integers.get(i).compareTo(t1.get(i)) != 0) {
-                    return integers.get(i).compareTo(t1.get(i));
-                }
-            }
-            return 0;
-        });
-
-        int[] answer = route.get(k - 1).stream().mapToInt(Integer::intValue).toArray();
-        return answer;
-    }
-
-    void dfs2(int[] cookies, int idx, List<Integer> recentRoute, int depth) {
-        List<Integer> newRoute = new ArrayList<>(recentRoute);
-        newRoute.add(cookies[idx]);
-        if (depth == maxCookies) {
-            Collections.reverse(newRoute);
-            route.add((ArrayList<Integer>) newRoute);
-            return;
-        }
-        for (int i = idx - 1; i >= 0; i--) {
-            if (cookies[i] < cookies[idx] && dp[i] + depth == maxCookies) {
-                dfs2(cookies, i, newRoute, depth + 1);
-            }
-        }
+        return dp[height - 1][width - 1];
     }
 }

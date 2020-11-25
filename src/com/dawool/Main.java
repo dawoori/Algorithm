@@ -1,37 +1,14 @@
 package com.dawool;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import com.dawool.topcoder.ChessMetric;
+
 import java.util.*;
 
 class Main {
-    public static void main(String[] args) throws ParseException {
+    public static void main(String[] args) {
         Solution solution = new Solution();
-        Random random = new Random();
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
-            list.add(random.nextInt(10000));
-//            list.add(i);
-        }
-        int[] b = list.stream().mapToInt(Integer::intValue).toArray();
-        int[] ans = solution.solution(b, 1);
-        System.out.println(Arrays.toString(ans));
-
-    }
-
-    static void perm(int[] arr, int[] output, boolean[] visited, int depth) {
-        if (depth == arr.length) {
-            System.out.println(Arrays.toString(output));
-            return;
-        }
-
-        for (int i=0; i<arr.length; i++) {
-            if (visited[i] != true) {
-                visited[i] = true;
-                output[depth] = arr[i];
-                perm(arr, output, visited, depth + 1);
-                visited[i] = false;
-            }
-        }
+        ChessMetric chessMetric = new ChessMetric();
+        long a = chessMetric.howMany(3, new int[]{0, 0}, new int[]{1, 0}, 1);
+        System.out.println(a);
     }
 }
